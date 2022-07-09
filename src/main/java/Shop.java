@@ -3,17 +3,19 @@ import java.util.List;
 
 public class Shop {
 
-    private final int PRODUCTION_TIME = 2500;
-    private final int TIME_OF_PURCHASE = 2500;
+    public static final int PRODUCTION_TIME = 2500;
+    public static final int TIME_OF_PURCHASE = 2500;
 
     List<Car> cars = new ArrayList<>();
 
     public synchronized void gettingACar() {
         try {
-            Thread.sleep(PRODUCTION_TIME);
-            cars.add(new Car());
-            System.out.println(Thread.currentThread().getName() + " выпустил автомобиль BMW");
-            notify();
+            while (cars.size() < 10) {
+                Thread.sleep(PRODUCTION_TIME);
+                cars.add(new Car());
+                System.out.println(Thread.currentThread().getName() + " выпустил автомобиль BMW");
+                notify();
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
